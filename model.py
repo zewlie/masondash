@@ -33,9 +33,9 @@ class Daily(db.Model):
 
     __tablename__ = "dailies"
 
-    id = db.Column(db.Integer, nullable-False, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     name = db.Column(db.String(200), nullable=False)
-    desc = db.Column(db.String(500), nullable=True)
+    desc = db.Column(db.String(500), nullable=False)
     qty = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
@@ -46,12 +46,31 @@ class Daily(db.Model):
                                                              self.desc,
                                                              self.qty)
 
+    def __init__(self, name, desc='No description.', qty=1):
+        self.name = name
+        self.desc = desc
+        self.qty = qty
+
+
 class DailyDone(db.Model):
     """Daily completion info."""
 
     __tablename__ = "dailies_done"
 
-    # TODO
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    daily_id = db.Column(db.Integer, db.ForeignKey('dailies.id'), nullable=False)
+    complete_time = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        """Provides helpful representation when printed."""
+
+        return "<DailyDone id={} daily_id={} complete_time={}".format(self.id,
+                                                                      self.daily_id,
+                                                                      self.complete_time)
+
+    def __init__(self, daily_id, complete_time):
+        self.daily_id = daily_id
+        self.complete_time = complete_time
 
 
 # TODO: food + exercise classes
