@@ -59,19 +59,37 @@ class DailyDone(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     daily_id = db.Column(db.Integer, db.ForeignKey('dailies.id'), nullable=False)
-    complete_time = db.Column(db.DateTime, nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
         return "<DailyDone id={} daily_id={} complete_time={}".format(self.id,
                                                                       self.daily_id,
-                                                                      self.complete_time)
+                                                                      self.time)
 
     def __init__(self, daily_id, complete_time):
         self.daily_id = daily_id
         self.complete_time = complete_time
 
+
+class Food(db.Model):
+    """Food log entry."""
+
+    __tablename__ = "food"
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    desc = db.Column(db.String(500), nullable=False)
+    calories = db.Column(db.Integer, nullable=True)
+    time = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        """Provides helpful representation when printed."""
+
+        return "<Food id={} calories={} desc={} time={}>".format(self.id,
+                                                                 self.desc,
+                                                                 self.calories,
+                                                                 self.time)
 
 # TODO: food + exercise classes
 
