@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}
+         {% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+</head>
+
+<body>
+
+{% block content %}
+{% endblock %}
+
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../../static/js/chartjs/Chart.js"></script>
+
+{% block javascript %}
+{% endblock %}
+
+</body>
+
+<footer></footer>
+
+</html>
