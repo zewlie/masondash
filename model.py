@@ -1,6 +1,7 @@
 """Classes for the life dash."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 db = SQLAlchemy()
@@ -24,8 +25,8 @@ class Pomodoro(db.Model):
                                                                     self.finish,
                                                                     self.desc)
 
-    def __init__(self, start):
-        self.start = start
+    def __init__(self):
+        self.start = datetime.now()
 
 
 class Daily(db.Model):
@@ -68,9 +69,9 @@ class DailyDone(db.Model):
                                                                       self.daily_id,
                                                                       self.time)
 
-    def __init__(self, daily_id, complete_time):
+    def __init__(self, daily_id):
         self.daily_id = daily_id
-        self.complete_time = complete_time
+        self.complete_time = datetime.now()
 
 
 class Food(db.Model):
@@ -80,7 +81,7 @@ class Food(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     desc = db.Column(db.String(500), nullable=False)
-    calories = db.Column(db.Integer, nullable=True)
+    calories = db.Column(db.Integer, nullable=False)
     time = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self):
@@ -90,6 +91,41 @@ class Food(db.Model):
                                                                  self.desc,
                                                                  self.calories,
                                                                  self.time)
+
+    def __init__(self, desc, calories):
+        self.desc = desc
+        self.calories = calories
+        self.time = datetime.now()
+
+
+class Exercise(db.Model):
+    """Exercise log entry."""
+
+    __tablename__ = "exercises"
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    desc = db.Column(db.String(500), nullable=False)
+    calories = db.Column(db.Integer, nullable=False)
+    intensity = db.Column(db.String(20), nullable=False)
+    duration = db.Column(db.Integer, nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        """Provides helpful representation when printed."""
+
+        return "<Exercise id={} calories={} intensity={} duration={} desc={} time={}>".format(self.id,
+                                                                                              self.calories,
+                                                                                              self.intensity,
+                                                                                              self.duration,
+                                                                                              self.desc,
+                                                                                              self.time)
+
+    def __init__(self, desc, calories, intensity, duration):
+        self.desc = desc
+        self.calories = calories
+        self.intensity = intensity
+        self.duration = duration
+
 
 # TODO: food + exercise classes
 
