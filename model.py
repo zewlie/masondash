@@ -29,6 +29,44 @@ class Pomodoro(db.Model):
         self.start = datetime.now()
 
 
+class PomoMetric(db.Model):
+    """Metrics to track with each pomodoro."""
+
+    __tablename__ = "pomo_metrics"
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        """Provides helpful representation when printed."""
+
+        return "<PomoMetric id={} name={}".format(self.id, self.name)
+
+    def __init__(self, name):
+        self.name = name
+
+
+class PomoScore(db.Model):
+    """Scores for metrics tracked with each pomodoro."""
+
+    __tablename__ = "pomo_scores"
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    metric_id = db.Column(db.Integer, nullable=False)
+    pomo_id = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        """Provides helpful representation when printed."""
+
+        return "<PomoScore id={} metric_id={} pomo_id={}>".format(self.id,
+                                                                  self.metric_id,
+                                                                  self.pomo_id)
+
+    def __init__(self, metric_id, pomo_id):
+        self.metric_id = metric_id
+        self.pomo_id = pomo_id
+
+
 class Daily(db.Model):
     """Daily activity option."""
 
