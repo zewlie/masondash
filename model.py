@@ -52,8 +52,11 @@ class PomoScore(db.Model):
     __tablename__ = "pomo_scores"
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    metric_id = db.Column(db.Integer, nullable=False)
-    pomo_id = db.Column(db.Integer, nullable=False)
+    metric_id = db.Column(db.Integer, db.ForeignKey('pomo_metrics.id'), nullable=False)
+    pomo_id = db.Column(db.Integer, db.ForeignKey('pomodoros.id'), nullable=False)
+
+    metric = db.relationship("PomoMetric", backref=db.backref("pomo_scores"))
+    pomo = db.relationship("Pomodoro", backref=db.backref("pomo_scores"))
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -99,6 +102,8 @@ class DailyDone(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     daily_id = db.Column(db.Integer, db.ForeignKey('dailies.id'), nullable=False)
     time = db.Column(db.DateTime, nullable=False)
+
+    daily = db.relationship("Daily", backref=db.backref("dailies_done"))
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -163,10 +168,6 @@ class Exercise(db.Model):
         self.calories = calories
         self.intensity = intensity
         self.duration = duration
-
-
-# TODO: food + exercise classes
-
 
 
 ##############################################################################
