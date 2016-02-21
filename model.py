@@ -54,6 +54,7 @@ class PomoScore(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     metric_id = db.Column(db.Integer, db.ForeignKey('pomo_metrics.id'), nullable=False)
     pomo_id = db.Column(db.Integer, db.ForeignKey('pomodoros.id'), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
 
     metric = db.relationship("PomoMetric", backref=db.backref("pomo_scores"))
     pomo = db.relationship("Pomodoro", backref=db.backref("pomo_scores"))
@@ -79,6 +80,8 @@ class Daily(db.Model):
     name = db.Column(db.String(200), nullable=False)
     desc = db.Column(db.String(500), nullable=False)
     qty = db.Column(db.Integer, nullable=False)
+    class_ = db.Column(db.String(500), nullable=False)
+    class_done = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -88,10 +91,12 @@ class Daily(db.Model):
                                                              self.desc,
                                                              self.qty)
 
-    def __init__(self, name, desc='No description.', qty=1):
+    def __init__(self, name, desc='No description.', qty=1, class_='daily-default', class_done='done-default'):
         self.name = name
         self.desc = desc
         self.qty = qty
+        self.class_ = class_
+        self.class_done = class_done
 
 
 class DailyDone(db.Model):
@@ -168,6 +173,23 @@ class Exercise(db.Model):
         self.calories = calories
         self.intensity = intensity
         self.duration = duration
+
+
+class Factor(db.Model):
+    """A thing suspected of significantly impacting dailies positively or negatively."""
+
+    __tablename__ = "factors"
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(200), nullable=False)
+    desc = db.Column(db.String(500), nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+
+
+    def __init__(self, name, desc):
+        self.name = name
+        self.desc = desc
+        self.time = datetime.now()
 
 
 ##############################################################################
