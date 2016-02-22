@@ -1,0 +1,159 @@
+body {
+    background:url('../../static/img/bg.png');
+    font-family: 'Open Sans', sans-serif;
+    color: #7E7E7E;
+
+    padding: 30px 0 0 0;
+}
+
+/*Defaults (greyed-out)*/
+
+.module-title {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 200%;
+    font-weight: 200;
+}
+
+.dash-section {
+    padding: 20px 0 20px 0;
+    border-top: 1px #4D4D4D solid;
+}
+
+.module-title-icon {
+    color: #4A4A4A;
+}
+
+/* Dailies - Incomplete */
+
+.daily-title {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 70%;
+    font-weight: 200;
+}
+
+.metric-title {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 70%;
+    font-weight: 200;
+    line-height: 300%;
+}
+
+.daily-default {
+
+}
+
+.daily-icon-slot {
+    padding: 10px 5px 25px 5px;
+    display: inline-block;
+}
+
+.daily-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.do-daily {
+    display: inline-block;
+    font-size: 160%;
+    color: #BFC89F;
+}
+
+.glyphicon-ok, .glyphicon-plus {
+    color: #BFC89F;
+}
+
+/* Dailies - Done */
+
+.current-time {
+    font-size: 400%;
+    font-weight: 100;
+    text-align: center;
+}
+
+.btn-success {
+    color: #bfbfbf;
+    background-color: #4A4A4A;
+    border-color: #4A4A4A;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.btn-success:hover, .btn-success:active, .btn-success:focus {
+    color: #bfbfbf;
+    background-color: #574260 !important;
+    border-color: #574260 !important;
+}
+
+.submit-text {
+    background-color: rgba(77, 77, 77, 0.2);
+    border-radius: 5px;
+    border: 0;
+    width: 80%;
+    color: #bfbfbf;
+    padding: 10px;
+}
+
+.submit-text: active {
+    background-color: #9e5e71 !important;
+}
+.btn:focus,.btn:active, textarea:focus, textarea:active {
+   outline: none !important;
+}
+
+.pomo-score {
+    background-color: #4D4D4D;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-0:hover, .pomo-score-0:focus, .pomo-score-0:active, .pomo-score-0.active {
+    background-color: #4D4D4D;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-1:hover, .pomo-score-1:focus, .pomo-score-1:active, .pomo-score-1.active {
+    background-color: #574260;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-2:hover, .pomo-score-2:focus, .pomo-score-2:active, .pomo-score-2.active {
+    background-color: #7b5069;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-3:hover, .pomo-score-3:focus, .pomo-score-3:active, .pomo-score-3.active {
+    background-color: #9E5E71;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-4:hover, .pomo-score-4:focus, .pomo-score-4:active, .pomo-score-4.active {
+    background-color: #b86c74;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-5:hover, .pomo-score-5:focus, .pomo-score-5:active, .pomo-score-5.active {
+    background-color: #D27976;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-6:hover, .pomo-score-6:focus, .pomo-score-6:active, .pomo-score-6.active {
+    background-color: #e2937b;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-7:hover, .pomo-score-7:focus, .pomo-score-7:active, .pomo-score-7.active {
+    background-color: #F1AC7F;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-8:hover, .pomo-score-8:focus, .pomo-score-8:active, .pomo-score-8.active {
+    background-color: #f4bf8d;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomo-score-9:hover, .pomo-score-9:focus, .pomo-score-9:active, .pomo-score-9.active {
+    background-color: #F7D19C;
+    color: rgba(255, 255, 255, 0.5);
+}

@@ -80,8 +80,8 @@ class Daily(db.Model):
     name = db.Column(db.String(200), nullable=False)
     desc = db.Column(db.String(500), nullable=False)
     qty = db.Column(db.Integer, nullable=False)
-    class_ = db.Column(db.String(500), nullable=False)
-    class_done = db.Column(db.String(500), nullable=False)
+    icon = db.Column(db.String(500), nullable=False)
+    class_name = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -91,12 +91,12 @@ class Daily(db.Model):
                                                              self.desc,
                                                              self.qty)
 
-    def __init__(self, name, desc='No description.', qty=1, class_='daily-default', class_done='done-default'):
+    def __init__(self, name, desc='No description.', qty=1, icon='default', class_name='default'):
         self.name = name
         self.desc = desc
         self.qty = qty
-        self.class_ = class_
-        self.class_done = class_done
+        self.icon = icon
+        self.class_name = class_name
 
 
 class DailyDone(db.Model):
@@ -119,7 +119,7 @@ class DailyDone(db.Model):
 
     def __init__(self, daily_id):
         self.daily_id = daily_id
-        self.complete_time = datetime.now()
+        self.time = datetime.now()
 
 
 class Food(db.Model):

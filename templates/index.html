@@ -6,28 +6,306 @@ Mason Dash
 
 {% block content %}
     <div class="container">
-
         <div class="row">
-            <div class="col-xs-12 col-md-4 col-lg-4">
-                Pomodoro system goes here.
+            <div class="dash-section col-xs-12 col-md-4 col-lg-4">
+                <span class="module-title">
+                    <span class="module-title-icon glyphicon glyphicon-time" aria-hidden="true"></span> Pomodoro</span><br />
+
+                    <div id="current-time"></div>
+
+                <button type="button" class="btn btn-success">Start pomodoro</button>
+                <br /><br />
+
+                <textarea class="submit-text"></textarea><br />
+
+                <span class="metric-title">Mood</span>
+
+                <br />
+
+                <button id="mood-0" type="button" class="btn btn-xs pomo-score-mood pomo-score-0 pomo-score">0</button>
+                <button id="mood-1" type="button" class="btn btn-xs pomo-score-mood pomo-score-1 pomo-score">1</button>
+                <button id="mood-2" type="button" class="btn btn-xs pomo-score-mood pomo-score-2 pomo-score">2</button>
+                <button id="mood-3" type="button" class="btn btn-xs pomo-score-mood pomo-score-3 pomo-score">3</button>
+                <button id="mood-4" type="button" class="btn btn-xs pomo-score-mood pomo-score-4 pomo-score">4</button>
+                <button id="mood-5" type="button" class="btn btn-xs pomo-score-mood pomo-score-5 pomo-score">5</button>
+                <button id="mood-6" type="button" class="btn btn-xs pomo-score-mood pomo-score-6 pomo-score">6</button>
+                <button id="mood-7" type="button" class="btn btn-xs pomo-score-mood pomo-score-7 pomo-score">7</button>
+                <button id="mood-8" type="button" class="btn btn-xs pomo-score-mood pomo-score-8 pomo-score">8</button>
+                <button id="mood-9" type="button" class="btn btn-xs pomo-score-mood pomo-score-9 pomo-score">9</button>
+
+                <br />
+
+                <span class="metric-title">Motivation</span><br />
+
+                <button id="motivation-0" type="button" class="btn btn-xs pomo-score-motivation pomo-score-0 pomo-score">0</button>
+                <button id="motivation-1" type="button" class="btn btn-xs pomo-score-motivation pomo-score-1 pomo-score">1</button>
+                <button id="motivation-2" type="button" class="btn btn-xs pomo-score-motivation pomo-score-2 pomo-score">2</button>
+                <button id="motivation-3" type="button" class="btn btn-xs pomo-score-motivation pomo-score-3 pomo-score">3</button>
+                <button id="motivation-4" type="button" class="btn btn-xs pomo-score-motivation pomo-score-4 pomo-score">4</button>
+                <button id="motivation-5" type="button" class="btn btn-xs pomo-score-motivation pomo-score-5 pomo-score">5</button>
+                <button id="motivation-6" type="button" class="btn btn-xs pomo-score-motivation pomo-score-6 pomo-score">6</button>
+                <button id="motivation-7" type="button" class="btn btn-xs pomo-score-motivation pomo-score-7 pomo-score">7</button>
+                <button id="motivation-8" type="button" class="btn btn-xs pomo-score-motivation pomo-score-8 pomo-score">8</button>
+                <button id="motivation-9" type="button" class="btn btn-xs pomo-score-motivation pomo-score-9 pomo-score">9</button>
+
+                <br />
+
+                <span class="metric-title">Focus</span><br />
+
+                <button id="focus-0" type="button" class="btn btn-xs pomo-score-focus pomo-score-0 pomo-score">0</button>
+                <button id="focus-1" type="button" class="btn btn-xs pomo-score-focus pomo-score-1 pomo-score">1</button>
+                <button id="focus-2" type="button" class="btn btn-xs pomo-score-focus pomo-score-2 pomo-score">2</button>
+                <button id="focus-3" type="button" class="btn btn-xs pomo-score-focus pomo-score-3 pomo-score">3</button>
+                <button id="focus-4" type="button" class="btn btn-xs pomo-score-focus pomo-score-4 pomo-score">4</button>
+                <button id="focus-5" type="button" class="btn btn-xs pomo-score-focus pomo-score-5 pomo-score">5</button>
+                <button id="focus-6" type="button" class="btn btn-xs pomo-score-focus pomo-score-6 pomo-score">6</button>
+                <button id="focus-7" type="button" class="btn btn-xs pomo-score-focus pomo-score-7 pomo-score">7</button>
+                <button id="focus-8" type="button" class="btn btn-xs pomo-score-focus pomo-score-8 pomo-score">8</button>
+                <button id="focus-9" type="button" class="btn btn-xs pomo-score-focus pomo-score-9 pomo-score">9</button>
+
+                <br />
+
+                <span class="metric-title">Energy</span><br />
+
+                <button id="energy-0" type="button" class="btn btn-xs pomo-score-energy pomo-score-0 pomo-score">0</button>
+                <button id="energy-1" type="button" class="btn btn-xs pomo-score-energy pomo-score-1 pomo-score">1</button>
+                <button id="energy-2" type="button" class="btn btn-xs pomo-score-energy pomo-score-2 pomo-score">2</button>
+                <button id="energy-3" type="button" class="btn btn-xs pomo-score-energy pomo-score-3 pomo-score">3</button>
+                <button id="energy-4" type="button" class="btn btn-xs pomo-score-energy pomo-score-4 pomo-score">4</button>
+                <button id="energy-5" type="button" class="btn btn-xs pomo-score-energy pomo-score-5 pomo-score">5</button>
+                <button id="energy-6" type="button" class="btn btn-xs pomo-score-energy pomo-score-6 pomo-score">6</button>
+                <button id="energy-7" type="button" class="btn btn-xs pomo-score-energy pomo-score-7 pomo-score">7</button>
+                <button id="energy-8" type="button" class="btn btn-xs pomo-score-energy pomo-score-8 pomo-score">8</button>
+                <button id="energy-9" type="button" class="btn btn-xs pomo-score-energy pomo-score-9 pomo-score">9</button>
+
+                <br />
+
+                <span class="metric-title">Hunger</span><br />
+
+                <button id="hunger-0" type="button" class="btn btn-xs pomo-score-hunger pomo-score-0 pomo-score">0</button>
+                <button id="hunger-1" type="button" class="btn btn-xs pomo-score-hunger pomo-score-1 pomo-score">1</button>
+                <button id="hunger-2" type="button" class="btn btn-xs pomo-score-hunger pomo-score-2 pomo-score">2</button>
+                <button id="hunger-3" type="button" class="btn btn-xs pomo-score-hunger pomo-score-3 pomo-score">3</button>
+                <button id="hunger-4" type="button" class="btn btn-xs pomo-score-hunger pomo-score-4 pomo-score">4</button>
+                <button id="hunger-5" type="button" class="btn btn-xs pomo-score-hunger pomo-score-5 pomo-score">5</button>
+                <button id="hunger-6" type="button" class="btn btn-xs pomo-score-hunger pomo-score-6 pomo-score">6</button>
+                <button id="hunger-7" type="button" class="btn btn-xs pomo-score-hunger pomo-score-7 pomo-score">7</button>
+                <button id="hunger-8" type="button" class="btn btn-xs pomo-score-hunger pomo-score-8 pomo-score">8</button>
+                <button id="hunger-9" type="button" class="btn btn-xs pomo-score-hunger pomo-score-9 pomo-score">9</button>
+
+                <br /><br />
+
+            </div>
+
+            <div class="dash-section col-xs-12 col-md-8 col-lg-8">
+                <span class="module-title">
+                    <span class="module-title-icon glyphicon glyphicon-play-circle" aria-hidden="true"></span> Dailies</span><br />
+
+
+                {% for daily in dailies %}
+
+                    {% if (daily.id % 3) == 0 %}
+                        <div id="daily-{{ daily.id }}" class="col-xs-12 col-md-4 col-lg-4">
+                            <div class="{{ daily.class_name }}">
+                                <span class="daily-title">{{ daily.name }}</span></div>
+
+
+                                {% for x in range(daily.count) %}
+                                    {% if x < daily.qty %}
+                                <div id="icon-{{x}}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{x}}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}-{{ 6 - (daily.colors + x) }}.png">
+                                </div>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                                {% for x in range(daily.qty - daily.count) %}
+                                <div id="icon-{{ daily.count + x }}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{ daily.count + x }}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}.png">
+                                </div>
+                                {% endfor %}
+
+
+                                <div id="do-daily-{{ daily.id }}-{{ daily.icon }}" class="do-daily" style="display: none;">
+                                    <span class="module-title-icon glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </div>
+                        </div>
+                        </div>
+                    {% elif (daily.id % 3) == 1 %}
+                        <div class="row">
+                        <div id="daily-{{ daily.id }}" class="col-xs-12 col-md-4 col-lg-4">
+                            <div class="{{ daily.class_name }}">
+                            <span class="daily-title">{{ daily.name }}</span></div>
+                        
+
+                            {% for x in range(daily.count) %}
+                                    {% if x < daily.qty %}
+                                <div id="icon-{{x}}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{x}}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}-{{ 6 - (daily.colors + x) }}.png">
+                                </div>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                                {% for x in range(daily.qty - daily.count) %}
+                                <div id="icon-{{ daily.count + x }}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{ daily.count + x }}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}.png">
+                                </div>
+                                {% endfor %}
+
+
+                                <div id="do-daily-{{ daily.id }}-{{ daily.icon }}" class="do-daily" style="display: none;">
+                                    <span class="module-title-icon glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </div>
+                        </div>
+                    {% else %}
+                        <div id="daily-{{ daily.id }}" class="col-xs-12 col-md-4 col-lg-4">
+                            <div class="{{ daily.class_name }}">
+                            <span class="daily-title">{{ daily.name }}</span></div>
+                            
+
+                            {% for x in range(daily.count) %}
+                                    {% if x < daily.qty %}
+                                <div id="icon-{{x}}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{x}}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}-{{ 6 - (daily.colors + x) }}.png">
+                                </div>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                                {% for x in range(daily.qty - daily.count) %}
+                                <div id="icon-{{ daily.count + x }}-{{ daily.id }}-{{ daily.icon }}" class="daily-icon-slot">
+                                    <img id="img-{{ daily.count + x }}-{{ daily.id }}" class="daily-icon" src="../../static/img/daily-icons/{{ daily.icon }}.png">
+                                </div>
+                                {% endfor %}
+
+
+                            <div id="do-daily-{{ daily.id }}-{{ daily.icon }}" class="do-daily" style="display: none;">
+                                    <span class="module-title-icon glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </div>
+
+<!--                             <div id="over-qty">
+                                <span class="module-title-icon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="module-title-icon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="module-title-icon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </div> -->
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+
+
             </div>
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-md-4 col-lg-4">
-                Daily activity checklist goes here.
+            <div class="dash-section col-xs-12 col-md-5 col-lg-5">
+                <span class="module-title">
+                    <span class="module-title-icon glyphicon glyphicon glyphicon-cutlery" aria-hidden="true"></span> Food</span><br /><br />
+                
+
+                <textarea class="submit-text"></textarea>
+
+
+            </div>
+
+            <div class="dash-section col-xs-12 col-md-5 col-lg-5">
+                <span class="module-title">
+                    <span class="module-title-icon glyphicon glyphicon-fire" aria-hidden="true"></span> Exercise</span><br /><br />
+                
+
+                <textarea class="submit-text"></textarea>
+
+
+            </div>
+
+            <div class="dash-section col-xs-12 col-md-2 col-lg-2">
+                <span class="module-title">
+                    <span class="module-title-icon glyphicon glyphicon-random" aria-hidden="true"></span> Misc</span><br /><br />
+            
+                <textarea class="submit-text"></textarea>
+
+
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-md-4 col-lg-4">
-                Nutrition + exercise info goes here.
-            </div>
-        </div>
-
     </div>
 {% endblock %}
 
 {% block javascript %}
-Mason Dash
+<script>
+
+function incrementCount(dailyID) {
+    dailyCounts[dailyID] += 1;
+}
+
+var dailyCounts = {}
+
+{% for daily in dailies %}
+    dailyCounts[ {{ daily.id }}] = {{ daily.count }}
+{% endfor %}
+
+$( ".daily-icon-slot" ).mouseover(function() {
+    var daily = this.id;
+    var dailyID = daily.split("-")[2];
+    var dailyImg =  daily.split("-")[3];
+
+$( "#do-daily-" + dailyID + "-" + dailyImg ).stop().fadeTo(200,1)
+});
+
+$( ".do-daily" ).mouseover(function() {
+    var daily = this.id;
+    var dailyID = daily.split("-")[2];
+    var dailyImg =  daily.split("-")[3];
+
+$( "#do-daily-" + dailyID + "-" + dailyImg ).stop().fadeTo(200,1)
+});
+
+$( ".daily-icon-slot" ).mouseout(function() {
+    var daily = this.id;
+    var dailyID = daily.split("-")[2];
+    var dailyImg =  daily.split("-")[3];
+
+$( "#do-daily-" + dailyID + "-" + dailyImg ).stop().fadeTo(2000,0)
+});
+
+$( ".do-daily" ).mouseout(function() {
+    var daily = this.id;
+    var dailyID = daily.split("-")[2];
+    var dailyImg =  daily.split("-")[3];
+
+$( "#do-daily-" + dailyID + "-" + dailyImg ).stop().fadeTo(2000,0)
+});
+
+
+$( ".do-daily" ).click(function() {
+    var daily = this.id;
+    var dailyID = daily.split("-")[2];
+    var dailyImg =  daily.split("-")[3];
+    var imgID = "#img-" + dailyCounts[dailyID] + "-" + dailyID;
+
+    $( imgID ).attr('src','../../static/img/daily-icons/' + dailyImg + '-green.png');
+
+    $.ajax({
+        method: "POST",
+        url: "/complete",
+        data: { "daily_id": dailyID }
+        });
+
+    incrementCount(dailyID);
+
+    console.log(dailyCounts[dailyID]);
+    console.log(imgID);
+
+});
+
+$( ".pomo-score" ).click(function() {
+    var metric = this.id;
+    var metricType = metric.split("-")[0];
+
+   $( '.pomo-score-' + metricType ).removeClass('active');
+   $(this).addClass('active');
+});
+
+
+</script>
 {% endblock %}
