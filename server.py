@@ -1,7 +1,7 @@
 """Server for the life dash."""
 
 from random import randint
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta
 
 from model import connect_to_db, db
 from model import Pomodoro, PomoMetric, PomoScore, Daily, DailyDone, Food, Exercise, Factor
@@ -35,6 +35,11 @@ def index():
     # Grab current pomodoro + the metrics and dailies we'll need to build out the dash
 
     current_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish > now).first()
+    last_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish < now).order_by(Pomodoro.finish.desc()).first()
+
+    if last_pomo is not None:
+        last_pomo.start_str = str(datetime.strftime(last_pomo.start, "%I:%M %p"))
+        last_pomo.finish_str = str(datetime.strftime(last_pomo.finish, "%I:%M %p"))
 
     if current_pomo is None:
         current_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish < now).filter(Pomodoro.desc == None).first()
@@ -62,6 +67,7 @@ def index():
     factors = db.session.query(Factor).filter((now - Factor.time) < timedelta(hours=12)).all()
 
     return render_template('index.html', current_pomo=current_pomo,
+                                         last_pomo=last_pomo,
                                          metrics=metrics,
                                          dailies=dailies,
                                          pomos_done=pomos_done,
@@ -146,6 +152,50 @@ def submit_pomo():
     hunger = PomoScore(metric_id=hunger_id.id, pomo_id=pomo_id, score=score_hunger)
     db.session.add(hunger)
 
+    db.session.commit()
+
+    return jsonify({'success': 'yes'})
+
+
+@app.route('/submit-food', methods=['POST'])
+def submit_food():
+    """Submit food entry to db."""
+
+    desc = request.form.get("desc")
+    calories = int(request.form.get("calories"))
+
+    food = Food(desc=desc, calories=calories)
+    db.session.add(food)
+    db.session.commit()
+
+    return jsonify({'success': 'yes'})
+
+
+@app.route('/submit-exercise', methods=['POST'])
+def submit_exercise():
+    """Submit exercise entry to db."""
+
+    desc = request.form.get("desc")
+    duration = int(request.form.get("duration"))
+    intensity = request.form.get("intensity")
+    calories = int(request.form.get("calories"))
+
+    exercise = Exercise(desc=desc, duration=duration, intensity=intensity, calories=calories)
+    db.session.add(exercise)
+    db.session.commit()
+
+    return jsonify({'success': 'yes'})
+
+
+@app.route('/submit-misc', methods=['POST'])
+def submit_misc():
+    """Submit misc factor entry to db."""
+
+    desc = request.form.get("desc")
+    name = request.form.get("name")
+
+    factor = Factor(desc=desc, name=name)
+    db.session.add(factor)
     db.session.commit()
 
     return jsonify({'success': 'yes'})

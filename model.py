@@ -176,6 +176,7 @@ class Exercise(db.Model):
         self.calories = calories
         self.intensity = intensity
         self.duration = duration
+        self.time = datetime.now()
 
 
 class Factor(db.Model):

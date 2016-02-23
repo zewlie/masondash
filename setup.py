@@ -8,8 +8,8 @@ METRIC_LIST = ['energy', 'hunger', 'motivation', 'focus', 'mood']
 
 DAILY_LIST = [['Walk Kitty', 'Take Kitty for a walk.', 3, 'dog'],
               ['15m Exercise', '15 minutes of high-intensity exercise.', 3, 'exercise'],
-              ['CoQ 10', '200mg CoQ 10 per dose.', 2, 'meds'],
-              ['Vitamin D3', '1000mg Vitamin D3 per dose.', 2, 'meds'],
+              ['CoQ 10 + Vitamin D3', '200mg CoQ 10 + 1000mg Vitamin D3 per dose.', 2, 'meds'],
+              ['Multivitamin', 'Prenatal.', 1, 'meds'],
               ['Calcium', '500mg Calcium per dose.', 2, 'meds'],
               ['Green Tea', 'Drink LOTS of green tea!', 3, 'tea'],
               ['Guinea Pig Maintenance', 'Check on & care for guinea pigs.', 1, 'guinea_pig'],
@@ -17,7 +17,7 @@ DAILY_LIST = [['Walk Kitty', 'Take Kitty for a walk.', 3, 'dog'],
               ['5m Hamstring Stretches', '5m of moderate hamstring stretches.', 3, 'stretch'],
               ['Help Luke', 'Do something nice for Luke', 1, 'heart'],
               ['Help a Friend', 'Do something nice for a friend.', 1, 'helping_hand'],
-              ['10m Brainstorm', '10 minutes of brainstorming high-value things to think about, suggest, write, etc.', 1, 'brainstorm']
+              ['10m Brainstorm', '10 minutes of brainstorming high-value things to think about, suggest, write, etc.', 2, 'brainstorm']
               ]
 
 

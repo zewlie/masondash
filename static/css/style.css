@@ -1,14 +1,94 @@
+
+header {
+    display:table;
+    width:100%;
+    max-width:100%;
+}
+
+header .module-title-container {
+    display:table-row;
+    line-height:1.5em;
+    font-size:2em;
+    white-space:nowrap;
+}
+
+header .daily-sub-container {
+    display:table-row;
+    white-space:nowrap;
+}
+
+header .module-title, header .daily-left {
+    font-size:inherit; /* Change font-size in header */
+    overflow:hidden;
+    display:table-cell;
+    vertical-align:middle;
+    width:1px;
+}
+
+header span.spacer {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+header .module-title, header .daily-left {
+    padding:0px 10px 0px 0px;
+}
+
+header span.spacer:after {
+    display:inline-block;
+    width:100%;
+    content:".";
+    font-size:0;
+    color:transparent;
+    height:2px;
+    background: #4A4A4A;
+    vertical-align:middle;
+    position:relative;
+    top:-1px;
+}
+
+header span.spacer-daily:after {
+    display:inline-block;
+    width:100%;
+    content:".";
+    font-size:0;
+    color:transparent;
+    height:10px;
+    background-image:url("../../static/img/bg_lines.png");
+    vertical-align:middle;
+    position:relative;
+    top:10px;
+}
+
+
+
+
 body {
     background:url('../../static/img/bg.png');
     background-color: #222222;
     font-family: 'Open Sans', sans-serif;
     color: #7E7E7E;
 
-    padding: 30px 0 50px 0;
+    padding: 30px 20px 50px 0px;
 }
 
-#running {
+.time-digit {
+    margin: 0px 2px 0px 2px;
+    padding: 0px 8px 0px 10px;
+    background: rgba(77, 77, 77, 0.4);
+    border-radius: 3px;
+}
+
+.log-entry {
+    text-transform: lowercase;
+}
+
+#running, #last-run, .log-intro {
     color: #4A4A4A;
+}
+
+.toggle-pomodoro {
+    text-align: center;
 }
 
 .label-pomodoro {
@@ -28,22 +108,50 @@ body {
     font-weight: 200;
 }
 
+.top-dash-section {
+    padding: 0px 0px 25px 0px;
+}
+
 .dash-section {
-    padding: 20px 0 20px 0;
-    border-top: 1px #4D4D4D solid;
+    padding: 25px 0px 10px 0px;
+}
+
+.border-row {
+    height: 6px;
+    margin-left: -5px;
+    border-top: 2px dotted;
+    border-bottom: 2px dotted;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+#border-column, .border-column-bottom {
+    width: 6px;
+    margin: auto;
+    border-left: 2px dotted;
+    border-right: 2px dotted;
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .module-title-icon {
     color: #4A4A4A;
+    font-size: 85%;
 }
 
 /* Dailies - Incomplete */
 
+.daily-container {
+}
+
+.daily-title-container {
+    padding: 15px 0px 10px 0px;
+}
+
 .daily-title {
+    color: #6c6c6c;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    font-size: 70%;
-    font-weight: 200;
+    font-size: 80%;
+    font-weight: 300;
 }
 
 .metric-title {
@@ -59,13 +167,11 @@ body {
 }
 
 .daily-icon-slot {
-    padding: 10px 5px 25px 5px;
+    margin: 0px 5px 0px 5px;
     display: inline-block;
-}
-
-.daily-icon {
     width: 40px;
     height: 40px;
+    background-size: cover;
 }
 
 .do-daily {
@@ -78,12 +184,19 @@ body {
     color: #BFC89F;
 }
 
+.glyphicon-remove {
+    color: #f9a3a3;
+}
+
 /* Dailies - Done */
 
 #current-time {
+    color: #bfbfbf;
+    text-align: center;
+    letter-spacing: 0.05em;
     font-size: 400%;
     font-weight: 100;
-    padding: 10px 0px 25px 0px;
+    padding: 25px 0px 25px 0px;
 }
 
 .btn-success {
@@ -104,13 +217,29 @@ body {
     background-color: rgba(77, 77, 77, 0.2);
     border-radius: 5px;
     border: 0;
-    width: 80%;
+    width: 100%;
     color: #bfbfbf;
     padding: 10px 15px 10px 15px;
 }
 
+.view-text {
+    background-color: rgba(77, 77, 77, 0.2);
+    border-radius: 5px;
+    border: 0;
+    width: 100%;
+    color: #a0a0a0;
+    padding: 15px 20px 15px 20px;
+    margin: 10px 0px 0px 0px;
+    line-height: 180%;
+}
+
+.show-inline {
+    display: inline-block;
+}
+
 input {
     background-color: rgba(77, 77, 77, 0.2);
+    color: #bfbfbf;
     border: 0;
     padding: 10px 15px 10px 15px;
     margin: 0px 0px 3px 0px;
@@ -124,19 +253,19 @@ input {
 }
 
 .full-width {
-    width: 80%;
+    width: 100%;
 }
 
 .third-width {
-    width: 23.03%;
+    width: 28.6%;
 }
 
 .nearly-full-width {
-    width: 70.85%;
+    width: 87.85%;
 }
 
 .nearly-full-width-sm {
-    width: 56.7%;
+    width: 76%;
 }
 
 input::-webkit-input-placeholder {
@@ -158,6 +287,7 @@ color: rgba(255, 255, 255, 0.2);
 .submit-text: active {
     background-color: #9e5e71 !important;
 }
+
 .btn:focus,.btn:active, textarea:focus, textarea:active, input:focus, input:active {
    outline: none !important;
 }
