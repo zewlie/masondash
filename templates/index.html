@@ -24,7 +24,7 @@ Mason Dash
 
                     <div id="current-time">
                     <!-- <span class="minutes">30</span>:<span class="seconds">00</span> -->
-                    <span class="time-digit minutes-0">3</span><span class="time-digit minutes-1">0</span>:<span class="time-digit seconds-0">0</span><span class="time-digit seconds-1">0</span>
+                    <span class="time-digit minutes-0">3</span><span class="time-digit minutes-1">0</span><span style="padding-left: 2px;">:</span><span class="time-digit seconds-0">0</span><span class="time-digit seconds-1">0</span>
                     </div>
 
 
@@ -185,7 +185,7 @@ Mason Dash
                                     <div style="line-height: 1px;"><br /></div>
                             </div>
                     </div>
-                    <span class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
                 </header>
                         </div>
                         </div>
@@ -221,7 +221,7 @@ Mason Dash
                                 </div>
 
                 </div>
-                    <span class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
                 </header>
 
                         </div>
@@ -254,7 +254,7 @@ Mason Dash
                             </div>
 
                             </div>
-                    <span class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
                 </header>
 
 <!--                             <div id="over-qty">
@@ -272,6 +272,22 @@ Mason Dash
         </div>
 
         <div class="row border-row">
+            <div class="pomometer" id="pomometer-1"></div>
+            <div class="pomometer" id="pomometer-2"></div>
+            <div class="pomometer" id="pomometer-3"></div>
+            <div class="pomometer" id="pomometer-4"></div>
+            <div class="pomometer" id="pomometer-5"></div>
+            <div class="pomometer" id="pomometer-6"></div>
+            <div class="pomometer" id="pomometer-7"></div>
+            <div class="pomometer" id="pomometer-8"></div>
+            <div class="pomometer" id="pomometer-9"></div>
+            <div class="pomometer" id="pomometer-10"></div>
+            <div class="pomometer" id="pomometer-11"></div>
+            <div class="pomometer" id="pomometer-12"></div>
+            <div class="pomometer" id="pomometer-13"></div>
+            <div class="pomometer" id="pomometer-14"></div>
+            <div class="pomometer" id="pomometer-15"></div>
+            <div class="pomometer" id="pomometer-16"></div>   
         </div>
 
         <div id="bottom-row" class="row">
@@ -378,6 +394,17 @@ var borderHeight, lowerBorderHeight;
 var pomoStart, pomoEnd, pomoID;
 var startTimeText, endTimeText;
 
+var pomosDone = {{ pomos_done|length }};
+var colors = ['#574260;', 
+              '#7b5069;',
+              '#9E5E71;',
+              '#b86c74;',
+              '#D27976;',
+              '#e2937b;',
+              '#F1AC7F;',
+              '#f4bf8d;',
+              '#f4bf8d;']
+
 {% if current_pomo %}
 pomoStart = new Date('{{ current_pomo.start.strftime("%a %b %d %Y %X") }}');
 pomoEnd = new Date('{{ current_pomo.finish.strftime("%a %b %d %Y %X") }}');
@@ -390,11 +417,17 @@ updateCurrentlyRunning(startTimeText, endTimeText);
 initializeClock('current-time', pomoStart, pomoEnd);
 {% endif %}
 
-
 $( "#submit-pomodoro" ).click(function() {
     submitMetrics();
     console.log("this did work");
 });
+
+function colorPomometer() {
+    for (i=0; i <= pomosDone; i++) {
+        var colorChoice = colors[Math.floor(Math.random()*colors.length)];
+        $( '#pomometer-' + i ).attr('style', 'border-color: ' + colorChoice);
+    };
+}
 
 function resizeBorder() {
     borderHeight = $( '#top-row' ).height() - 25;
@@ -501,7 +534,7 @@ function displayMetrics() {
 }
 
 function hideMetrics() {
-    $( "#pomodoro-metrics" ).stop().fadeTo(200,0);
+    $( "#pomodoro-metrics" ).stop().fadeOut(200);
 }
 
 //======================  end pomodoro metrics ======================//
@@ -537,10 +570,11 @@ function submitMetrics() {
     setTimeout(function(){ 
         $( "#pomodoro-submit-alert" ).stop().fadeOut(2000)
         $( ".currently-running" ).hide();
+        resizeBorder();
      }, 1000);
 
     hideMetrics();
-    resizeBorder();
+    pomosDone += 1;
 
 }
 
@@ -729,6 +763,7 @@ $( "#submit-misc" ).click(function() {
 });
 
 resizeBorder();
+colorPomometer();
 
 </script>
 {% endblock %}

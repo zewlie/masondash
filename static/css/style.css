@@ -70,6 +70,10 @@ body {
     color: #7E7E7E;
 
     padding: 30px 20px 50px 0px;
+
+    -webkit-box-shadow: inset 0px 0px 120px 0px rgba(0,0,0,0.6);
+    -moz-box-shadow: inset 0px 0px 120px 0px rgba(0,0,0,0.6);
+    box-shadow: inset 0px 0px 120px 0px rgba(0,0,0,0.6);
 }
 
 .time-digit {
@@ -119,8 +123,14 @@ body {
 .border-row {
     height: 6px;
     margin-left: -5px;
-    border-top: 2px dotted;
-    border-bottom: 2px dotted;
+}
+
+.pomometer {
+    display: inline-block;
+    height: 8px;
+    width: 5.95%;
+    border-top: 3px dotted;
+    border-bottom: 3px dotted;
     border-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -191,11 +201,11 @@ body {
 /* Dailies - Done */
 
 #current-time {
-    color: #bfbfbf;
+    color: #999;
     text-align: center;
     letter-spacing: 0.05em;
     font-size: 400%;
-    font-weight: 100;
+    font-weight: 600;
     padding: 25px 0px 25px 0px;
 }
 
@@ -343,6 +353,6 @@ color: rgba(255, 255, 255, 0.2);
 }
 
 .pomo-score-9:hover, .pomo-score-9:focus, .pomo-score-9:active, .pomo-score-9.active {
-    background-color: #F7D19C;
+    background-color: #f4bf8d;
     color: rgba(255, 255, 255, 0.5);
 }
