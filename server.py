@@ -1,10 +1,10 @@
 """Server for the life dash."""
 
 from random import randint
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 from model import connect_to_db, db
-from model import Pomodoro, PomoMetric, Daily, DailyDone, Food, Exercise, Factor
+from model import Pomodoro, PomoMetric, PomoScore, Daily, DailyDone, Food, Exercise, Factor
 
 from jinja2 import StrictUndefined
 from flask import Flask, Markup, render_template, redirect, request, flash, session, jsonify, url_for, abort
@@ -34,7 +34,11 @@ def index():
 
     # Grab current pomodoro + the metrics and dailies we'll need to build out the dash
 
-    current_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish is None).all()
+    current_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish > now).first()
+
+    if current_pomo is None:
+        current_pomo = db.session.query(Pomodoro).filter(Pomodoro.finish < now).filter(Pomodoro.desc == None).first()
+
     metrics = db.session.query(PomoMetric).all()
     dailies = db.session.query(Daily).all()
 
@@ -79,6 +83,72 @@ def complete_daily():
     db.session.commit()
 
     return "done"
+
+
+@app.route('/start-pomo', methods=['POST'])
+def start_pomo():
+    """Start a new pomodoro."""
+
+    raw_start = request.form.get("pomo_start").split()
+    raw_end = request.form.get("pomo_end").split()
+
+    raw_start = ' '.join(raw_start[0:5])
+    raw_end = ' '.join(raw_end[0:5])
+
+    pomo_start = datetime.strptime(raw_start, "%a %b %d %Y %X")
+    pomo_end = datetime.strptime(raw_end, "%a %b %d %Y %X")
+
+    pomo = Pomodoro(start=pomo_start, finish=pomo_end)
+
+    db.session.add(pomo)
+    db.session.flush()
+    db.session.commit()
+
+    return pomo.id
+
+@app.route('/submit-pomo', methods=['POST'])
+def submit_pomo():
+    """Submit pomodoro to db."""
+
+    pomo_id = request.form.get("pomo_id")
+    pomo_desc = request.form.get("pomo_desc")
+
+    pomo_end = request.form.get("pomo_end").split()
+    pomo_end = ' '.join(pomo_end[0:5])
+    pomo_end = datetime.strptime(pomo_end, "%a %b %d %Y %X")
+
+    current_pomo = db.session.query(Pomodoro).filter(Pomodoro.id == pomo_id).one()
+    current_pomo.desc = pomo_desc
+    current_pomo.finish = pomo_end
+
+    score_mood = request.form.get("mood")
+    mood_id = db.session.query(PomoMetric).filter(PomoMetric.name == 'mood').one()
+    mood = PomoScore(metric_id=mood_id.id, pomo_id=pomo_id, score=score_mood)
+    db.session.add(mood)
+
+    score_motivation = request.form.get("motivation")
+    motivation_id = db.session.query(PomoMetric).filter(PomoMetric.name == 'motivation').one()
+    motivation = PomoScore(metric_id=motivation_id.id, pomo_id=pomo_id, score=score_motivation)
+    db.session.add(motivation)
+
+    score_focus = request.form.get("focus")
+    focus_id = db.session.query(PomoMetric).filter(PomoMetric.name == 'focus').one()
+    focus = PomoScore(metric_id=focus_id.id, pomo_id=pomo_id, score=score_focus)
+    db.session.add(focus)
+
+    score_energy = request.form.get("energy")
+    energy_id = db.session.query(PomoMetric).filter(PomoMetric.name == 'energy').one()
+    energy = PomoScore(metric_id=energy_id.id, pomo_id=pomo_id, score=score_energy)
+    db.session.add(energy)
+
+    score_hunger = request.form.get("hunger")
+    hunger_id = db.session.query(PomoMetric).filter(PomoMetric.name == 'hunger').one()
+    hunger = PomoScore(metric_id=hunger_id.id, pomo_id=pomo_id, score=score_hunger)
+    db.session.add(hunger)
+
+    db.session.commit()
+
+    return jsonify({'success': 'yes'})
 
 
 if __name__ == "__main__":

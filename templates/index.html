@@ -11,12 +11,30 @@ Mason Dash
                 <span class="module-title">
                     <span class="module-title-icon glyphicon glyphicon-time" aria-hidden="true"></span> Pomodoro</span><br />
 
-                    <div id="current-time"></div>
+                    <span style="display: none;" id="running" class="currently-running"><i>running</i> &nbsp;</span>
+                    <span style="display: none;" id="current-start-time" class="currently-running"></span>
+                    <span style="display: none;" class="currently-running"> &#10230; </span>
+                    <span style="display: none;" id="current-finish-time" class="currently-running"></span>
 
-                <button type="button" class="btn btn-success">Start pomodoro</button>
+                    <div id="current-time">
+                    <span class="minutes">30</span>:<span class="seconds">00</span>
+                    </div>
+
+            <div id="toggle-pomodoro" style="{% if current_pomo %}display: none;{% endif %}">
+                <button id="start-pomodoro" type="button" class="btn btn-success">Start pomodoro</button>
+                <button style="display: none;" id="submit-pomodoro" type="button" class="btn btn-success">Submit pomodoro</button>
+            </div>
+
+            <div id="pomodoro-submit-alert" style="display: none;">
+                <br />
+                <span class="glyphicon glyphicon-ok label-pomodoro" aria-hidden="true"></span> <span class="label label-pomodoro">Pomodoro submitted</span>
+            </div>
+
                 <br /><br />
 
-                <textarea class="submit-text"></textarea><br />
+<div id="pomodoro-metrics" style="display: none;">
+
+                <textarea id="pomodoro-desc" class="submit-text"></textarea><br />
 
                 <span class="metric-title">Mood</span>
 
@@ -94,6 +112,7 @@ Mason Dash
                 <button id="hunger-9" type="button" class="btn btn-xs pomo-score-hunger pomo-score-9 pomo-score">9</button>
 
                 <br /><br />
+</div>
 
             </div>
 
@@ -204,7 +223,14 @@ Mason Dash
                     <span class="module-title-icon glyphicon glyphicon glyphicon-cutlery" aria-hidden="true"></span> Food</span><br /><br />
                 
 
-                <textarea class="submit-text"></textarea>
+                <input class="full-width" type="text" id="food-desc" name="food-desc" placeholder="description">
+                <input class="nearly-full-width" type="text" id="calories-eaten" name="calories-eaten" placeholder="calories">
+                <input id="submit-food" class="go-button" type="submit" value="&#10004;"></input>
+
+                <div id="food-submit-alert" style="display: none;">
+                <br />
+                <span class="glyphicon glyphicon-ok label-pomodoro" aria-hidden="true"></span> <span class="label label-pomodoro">Food submitted</span>
+            </div>
 
 
             </div>
@@ -214,8 +240,16 @@ Mason Dash
                     <span class="module-title-icon glyphicon glyphicon-fire" aria-hidden="true"></span> Exercise</span><br /><br />
                 
 
-                <textarea class="submit-text"></textarea>
+                <input class="full-width" type="text" id="exercise-desc" name="exercise-desc" placeholder="description">
+                <input class="third-width" type="text" id="duration" name="duration" placeholder="duration">
+                <input class="third-width" type="text" id="intensity" name="intensity" placeholder="intensity">
+                <input class="third-width" type="text" id="calories-burnt" name="calories-burnt" placeholder="calories">
+                <input id="submit-exercise" class="go-button" type="submit" value="&#10004;"></input>
 
+                <div id="exercise-submit-alert" style="display: none;">
+                <br />
+                <span class="glyphicon glyphicon-ok label-pomodoro" aria-hidden="true"></span> <span class="label label-pomodoro">Exercise submitted</span>
+            </div>
 
             </div>
 
@@ -223,8 +257,14 @@ Mason Dash
                 <span class="module-title">
                     <span class="module-title-icon glyphicon glyphicon-random" aria-hidden="true"></span> Misc</span><br /><br />
             
-                <textarea class="submit-text"></textarea>
+                <input class="full-width" type="text" id="misc-desc" name="misc-desc" placeholder="description">
+                <input class="nearly-full-width-sm" type="text" id="misc-name" name="misc-name" placeholder="name">
+                <input id="submit-misc" class="go-button" type="submit" value="&#10004;"></input>
 
+                <div id="misc-submit-alert" style="display: none;">
+                <br />
+                <span class="glyphicon glyphicon-ok label-pomodoro" aria-hidden="true"></span> <span class="label label-pomodoro">Misc factor submitted</span>
+            </div>
 
             </div>
         </div>
@@ -233,6 +273,150 @@ Mason Dash
 
 {% block javascript %}
 <script>
+
+var pomoStart, pomoEnd, pomoID;
+var startTimeText, endTimeText;
+
+{% if current_pomo %}
+pomoStart = new Date('{{ current_pomo.start.strftime("%a %b %d %Y %X") }}');
+pomoEnd = new Date('{{ current_pomo.finish.strftime("%a %b %d %Y %X") }}');
+pomoID = '{{ current_pomo.id }}';
+
+startTimeText = dateToText(pomoStart);
+endTimeText = dateToText(pomoEnd);
+
+updateCurrentlyRunning(startTimeText, endTimeText);
+initializeClock('current-time', pomoStart, pomoEnd);
+{% endif %}
+
+
+$( "#submit-pomodoro" ).click(function() {
+    submitMetrics();
+    console.log("this did work");
+});
+
+function updateCurrentlyRunning(start, end) {
+    $( "#current-start-time" ).html(start);
+    $( "#current-finish-time" ).html(end);
+    $( ".currently-running" ).fadeTo(500, 1);
+}
+function dateToText(date){
+    var dLabel = 'AM';
+    var dTime = String(date).split(' ')[4];
+    var dHour = parseInt(dTime.split(':')[0]);
+    var dMinute = dTime.split(':')[1];
+
+    if (dHour > 12){ 
+        dHour = dHour - 12;
+        dHour = ("0" + String(dHour)).slice(-2);
+        dLabel = 'PM';
+    };
+
+    return String(dHour) + ':' + String(dMinute) + ' ' + dLabel;
+}
+
+//======================  start timer ======================//
+
+
+function getTimeRemaining(start, end){
+    var t = Date.parse(end) - new Date();
+    var seconds = Math.floor( (t/1000) % 60 );
+    var minutes = Math.floor( (t/1000/60) % 60 );
+    var hours = Math.floor( (t/(1000*60*60)) % 24 );
+    var days = Math.floor( t/(1000*60*60*24) );
+
+    return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, start, end){
+    $( "#toggle-pomodoro" ).fadeTo(2000,0)
+    var clock = document.getElementById(id);
+    // var daysSpan = clock.querySelector('.days');
+    // var hoursSpan = clock.querySelector('.hours');
+    var minutesSpan = clock.querySelector('.minutes');
+    var secondsSpan = clock.querySelector('.seconds');
+
+
+    function updateClock(){
+        var t = getTimeRemaining(start, end);
+            // daysSpan.innerHTML = t.days;
+            // hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if(t.total <=0 ){
+        clearInterval(timeinterval);
+        minutesSpan.innerHTML = '00';
+        secondsSpan.innerHTML = '00';
+        displayMetrics();
+        updateCurrentlyRunning(startTimeText, 'NOW');
+       }
+    }
+
+    updateClock(); // run function once at first to avoid delay
+        
+    var timeinterval = setInterval(updateClock,1000);
+}
+
+
+//======================  end timer ======================//
+//======================  start pomodoro metrics ======================//
+
+function displayMetrics() {
+    $( "#pomodoro-metrics" ).stop().fadeTo(200,1);
+    $( "#toggle-pomodoro" ).stop().fadeTo(200,1);
+    
+    $( "#start-pomodoro" ).hide();
+    $( "#submit-pomodoro" ).show();
+}
+
+function hideMetrics() {
+    $( "#pomodoro-metrics" ).stop().fadeTo(200,0);
+}
+
+//======================  end pomodoro metrics ======================//
+
+function submitMetrics() {
+
+    console.log('inside submit metrics');
+
+    var pomoDesc = document.getElementById("pomodoro-desc").value;
+    var pomoScores = document.getElementsByClassName("active");
+    var pomoData = { "pomo_id": pomoID,
+                     "pomo_desc": pomoDesc,
+                     "pomo_end": new Date(),
+                    };
+
+    for (i = 0; i < pomoScores.length; i++) { 
+        var metricName = pomoScores[i].id.split('-')[0];
+        var metricValue = pomoScores[i].id.split('-')[1];
+        pomoData[metricName] = metricValue;
+    } 
+
+    $.ajax({
+        method: "POST",
+        url: "/submit-pomo",
+        data: pomoData
+        });
+
+    $( "#start-pomodoro" ).show();
+    $( "#submit-pomodoro" ).hide();
+    $( ".currently-running" ).fadeTo(300,0)
+
+    $( "#pomodoro-submit-alert" ).stop().fadeTo(300,1)
+    setTimeout(function(){ 
+        $( "#pomodoro-submit-alert" ).stop().fadeTo(2000,0)
+     }, 1000);
+
+    hideMetrics();
+
+}
 
 function incrementCount(dailyID) {
     dailyCounts[dailyID] += 1;
@@ -243,6 +427,7 @@ var dailyCounts = {}
 {% for daily in dailies %}
     dailyCounts[ {{ daily.id }}] = {{ daily.count }}
 {% endfor %}
+
 
 $( ".daily-icon-slot" ).mouseover(function() {
     var daily = this.id;
@@ -306,6 +491,66 @@ $( ".pomo-score" ).click(function() {
    $(this).addClass('active');
 });
 
+
+$( "#start-pomodoro" ).click(function() {
+    pomoStart = new Date();
+    pomoEnd = new Date(Date.parse(new Date()) + 30 * 60 * 1000);
+
+    startTimeText = dateToText(pomoStart);
+    endTimeText = dateToText(pomoEnd);
+    updateCurrentlyRunning(startTimeText, endTimeText);
+    initializeClock('current-time', pomoStart, pomoEnd);
+
+    pomoID = $.ajax({
+        method: "POST",
+        url: "/start-pomo",
+        data: { "pomo_start": pomoStart,
+                "pomo_end": pomoEnd }
+        });
+});
+
+$( "#submit-food" ).click(function() {
+
+    var desc = $( "#food-desc" ).val();
+    var calories = $( "calories-eaten" ).val();
+
+    $.ajax({
+        method: "POST",
+        url: "/submit-food",
+        data: { "desc": desc,
+                "calories": calories }
+        });
+});
+
+$( "#submit-exercise" ).click(function() {
+
+    var desc = $( "#exercise-desc" ).val();
+    var duration = $( "#duration" ).val();
+    var intensity = $( "#intensity" ).val();
+    var calories = $( "calories-burnt" ).val();
+
+    $.ajax({
+        method: "POST",
+        url: "/submit-food",
+        data: { "desc": desc,
+                "duration": duration,
+                "intensity": intensity,
+                "calories": calories }
+        });
+});
+
+$( "#submit-misc" ).click(function() {
+
+    var desc = $( "#misc-desc" ).val();
+    var name = $( "misc-name" ).val();
+
+    $.ajax({
+        method: "POST",
+        url: "/submit-food",
+        data: { "desc": desc,
+                "misc-name": name }
+        });
+});
 
 </script>
 {% endblock %}

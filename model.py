@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask import jsonify
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 db = SQLAlchemy()
@@ -15,7 +16,7 @@ class Pomodoro(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     start = db.Column(db.DateTime, nullable=False)
     finish = db.Column(db.DateTime, nullable=True)
-    desc = db.Column(db.DateTime, nullable=True)
+    desc = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -25,8 +26,9 @@ class Pomodoro(db.Model):
                                                                     self.finish,
                                                                     self.desc)
 
-    def __init__(self):
-        self.start = datetime.now()
+    def __init__(self, start, finish):
+        self.start = start
+        self.finish = finish
 
 
 class PomoMetric(db.Model):
@@ -66,9 +68,10 @@ class PomoScore(db.Model):
                                                                   self.metric_id,
                                                                   self.pomo_id)
 
-    def __init__(self, metric_id, pomo_id):
+    def __init__(self, metric_id, pomo_id, score):
         self.metric_id = metric_id
         self.pomo_id = pomo_id
+        self.score = score
 
 
 class Daily(db.Model):

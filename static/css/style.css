@@ -1,9 +1,22 @@
 body {
     background:url('../../static/img/bg.png');
+    background-color: #222222;
     font-family: 'Open Sans', sans-serif;
     color: #7E7E7E;
 
-    padding: 30px 0 0 0;
+    padding: 30px 0 50px 0;
+}
+
+#running {
+    color: #4A4A4A;
+}
+
+.label-pomodoro {
+    color: #BFC89F;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 70%;
+    letter-spacing: 0.08em;
 }
 
 /*Defaults (greyed-out)*/
@@ -67,10 +80,10 @@ body {
 
 /* Dailies - Done */
 
-.current-time {
+#current-time {
     font-size: 400%;
     font-weight: 100;
-    text-align: center;
+    padding: 10px 0px 25px 0px;
 }
 
 .btn-success {
@@ -93,13 +106,59 @@ body {
     border: 0;
     width: 80%;
     color: #bfbfbf;
-    padding: 10px;
+    padding: 10px 15px 10px 15px;
+}
+
+input {
+    background-color: rgba(77, 77, 77, 0.2);
+    border: 0;
+    padding: 10px 15px 10px 15px;
+    margin: 0px 0px 3px 0px;
+    border-radius: 5px;
+}
+
+.go-button {
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: 700;
+    color: #BFC89F;
+}
+
+.full-width {
+    width: 80%;
+}
+
+.third-width {
+    width: 23.03%;
+}
+
+.nearly-full-width {
+    width: 70.85%;
+}
+
+.nearly-full-width-sm {
+    width: 56.7%;
+}
+
+input::-webkit-input-placeholder {
+color: rgba(255, 255, 255, 0.2);
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+color: rgba(255, 255, 255, 0.2);
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+color: rgba(255, 255, 255, 0.2);
+}
+ 
+input:-ms-input-placeholder {  
+color: rgba(255, 255, 255, 0.2);
 }
 
 .submit-text: active {
     background-color: #9e5e71 !important;
 }
-.btn:focus,.btn:active, textarea:focus, textarea:active {
+.btn:focus,.btn:active, textarea:focus, textarea:active, input:focus, input:active {
    outline: none !important;
 }
 
