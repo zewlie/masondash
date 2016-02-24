@@ -1,7 +1,7 @@
 """Server for the life dash."""
 
 from random import randint
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 
 from model import connect_to_db, db
 from model import Pomodoro, PomoMetric, PomoScore, Daily, DailyDone, Food, Exercise, Factor
@@ -31,6 +31,8 @@ def index():
     """Home / main dash."""
 
     now = datetime.now()
+    today = datetime.combine(date.today(), datetime.min.time()) - timedelta(hours=24)
+    tomorrow = datetime.combine(date.today(), datetime.min.time()) + timedelta(hours=28)
 
     # Grab current pomodoro + the metrics and dailies we'll need to build out the dash
 
@@ -53,8 +55,8 @@ def index():
 
     # everything done in the last 12 hours should display
 
-    pomos_done = db.session.query(Pomodoro).filter((now - Pomodoro.finish) < timedelta(hours=12)).all()
-    dailies_done = db.session.query(DailyDone).filter((now - DailyDone.time) < timedelta(hours=12)).all()
+    pomos_done = db.session.query(Pomodoro).filter(Pomodoro.finish > today).filter(Pomodoro.finish < tomorrow).all()
+    dailies_done = db.session.query(DailyDone).filter(DailyDone.time > today).filter(DailyDone.time < tomorrow).all()
 
     for done in dailies_done:
         for daily in dailies:
@@ -62,9 +64,9 @@ def index():
                 daily.count += 1
                 break
 
-    food = db.session.query(Food).filter((now - Food.time) < timedelta(hours=12)).all()
-    exercise = db.session.query(Exercise).filter((now - Exercise.time) < timedelta(hours=12)).all()
-    factors = db.session.query(Factor).filter((now - Factor.time) < timedelta(hours=12)).all()
+    food = db.session.query(Food).filter(Food.time > today).filter(Food.time < tomorrow).all()
+    exercise = db.session.query(Exercise).filter(Exercise.time > today).filter(Exercise.time < tomorrow).all()
+    factors = db.session.query(Factor).filter(Factor.time > today).filter(Factor.time < tomorrow).all()
 
     return render_template('index.html', current_pomo=current_pomo,
                                          last_pomo=last_pomo,

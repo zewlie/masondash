@@ -185,7 +185,7 @@ Mason Dash
                                     <div style="line-height: 1px;"><br /></div>
                             </div>
                     </div>
-                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily{% if daily.count >= daily.qty %} spacer-done{% endif %}"></span></div>
                 </header>
                         </div>
                         </div>
@@ -221,7 +221,7 @@ Mason Dash
                                 </div>
 
                 </div>
-                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily{% if daily.count >= daily.qty %} spacer-done{% endif %}"></span></div>
                 </header>
 
                         </div>
@@ -254,7 +254,7 @@ Mason Dash
                             </div>
 
                             </div>
-                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily"></span></div>
+                    <span id="spacer-daily-{{ daily.id }}" class="spacer-daily{% if daily.count >= daily.qty %} spacer-done{% endif %}"></span></div>
                 </header>
 
 <!--                             <div id="over-qty">
@@ -764,6 +764,12 @@ $( "#submit-misc" ).click(function() {
 
 resizeBorder();
 colorPomometer();
+
+
+for (i=0; i<13; i++) {
+    var colorChoice = colors[Math.floor(Math.random()*colors.length)];
+    $( '#spacer-daily-' + i ).html();
+};
 
 </script>
 {% endblock %}

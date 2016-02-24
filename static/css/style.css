@@ -60,6 +60,10 @@ header span.spacer-daily:after {
     top:10px;
 }
 
+header span.spacer-done:after {
+    background-image:url("../../static/img/bg_lines_green.png") !important;
+}
+
 
 
 
@@ -308,7 +312,7 @@ color: rgba(255, 255, 255, 0.2);
 }
 
 .pomo-score-0:hover, .pomo-score-0:focus, .pomo-score-0:active, .pomo-score-0.active {
-    background-color: #4D4D4D;
+    background-color: #7a7a7a;
     color: rgba(255, 255, 255, 0.5);
 }
 
